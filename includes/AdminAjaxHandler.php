@@ -2,7 +2,7 @@
 
 namespace EMS\Includes;
 
-class AdminAjaxHandler
+class AdminAjaxHandler extends Models
 {
     function __construct()
     {
@@ -28,13 +28,26 @@ class AdminAjaxHandler
                 "function" => [$this, "deleteEvent"]
             ],
             "ems_edit_event_data" => [
-                "function" => [$this, "editEventData"]
+                "function" => [$this, "insertEventData"]
+            ],
+            "ems_insert_event_category_data" => [
+                "function" => [$this, "insertEventCategoryData"]
+            ],
+            "ems_get_event_category_data" => [
+                "function" => [$this, "getEventCategoryData"]
+            ],
+            "ems_insert_event_organizer_data" => [
+                "function" => [$this, "insertEventOrganizerData"]
+            ],
+            "ems_get_organizer_data" => [
+                "function" => [$this, "getOrganizerData"]
+            ],
+            "ems_get_single_category_data" => [
+                "function" => [$this, "getSingleCategoryData"]
             ]
-
+ 
         ];
     }
-
-
 
 
     public function insertEventData()
@@ -42,106 +55,68 @@ class AdminAjaxHandler
         if (!wp_verify_nonce($_POST["ems_nonce"], "ems_ajax_nonce")) {
             return wp_send_json_error("Busted! Please login!", 400);
         }
-   $eventData = array(
-   'title' => $_POST['title'],
-   'details' => $_POST['details'],
-   'category' => $_POST['category'],
-   'onlineEvent' => $_POST['onlineEvent'],
-   'url' => $_POST['url'],
-   'startingDate' => $_POST['startingDate'],
-   'startingTime' => $_POST['startingTime'],
-   'endingDate' => $_POST['endingDate'],
-   'endingTime' => $_POST['endingTime'],
-   'limit' => $_POST['limit'],
-   'deadline' => $_POST['deadline'],
-   );
 
-   $finalData = json_encode($eventData);
+        $value = ["title", "details", "category","organizer", "onlineEvent", "url", "startingDate","startingTime","endingDate","endingTime","limit","deadline"];
+        $field_keys = $this->handleEmptyField($value);
+        $eventData = $this->senitizeInputValue($field_keys);
 
-   $taxInput = array(
-    'category' => $_POST['category'],
-   );
- 
 
-            $data = array(
-                'post_title'     => $_POST['title'],
-                'post_content'   =>  $finalData,
-                'post_type' =>    'ems_event_data',
-                'tax_input' =>     'category',
-                // 'meta_input'        => $eventData ,
-            );
-
-       $formId =  wp_insert_post($data);
-    
-
-       if(!empty($formId)){
-        wp_send_json_success($id, 200);
-
-    //   $val =  wp_get_single_post($formId, ARRAY_A);
-
-    //  $content =  json_decode($val['post_content']);
-    //  $args = array(
-    //     'orderby' => 'date',
-    //     'order' => 'ASC',
-    //     'post_type'=>'ems_event_data',
-    //     'post_status' => 'any'
-    // );
-    //   $abcd =   get_posts($args);
-    //   var_dump( $abcd);
-
-    
-
-        
-
-       
-       }
-       
-   
+        if (isset($_POST["id"])) {
+            $id = $_POST["id"];
+            
+            parent::updateEventData($id, $eventData);
+        } else {
+            parent::addEventData($eventData);
+        }  
     }
 
+    
 
     public function getEventData(){
 
-           $val =  wp_get_single_post($formId, ARRAY_A);
+        $val =  wp_get_single_post($formId, ARRAY_A);
 
-     $content =  json_decode($val['post_content']);
-     $args = array(
-        'numberposts' => -1,
-        'orderby' => 'date',
-        'order' => 'ASC',
-        'post_type'=>'ems_event_data',
-        'post_status' => 'any'
-    );
-      $abcd =   get_posts($args);
+        $content =  json_decode($val['post_content']);
+        $args = array(
+            'numberposts' => -1,
+            'orderby' => 'date',
+            'order' => 'ASC',
+            'post_type'=>'ems_event_data',
+            'post_status' => 'any'
+        );
+        $abcd =   get_posts($args);
       
-      if (is_wp_error($abcd)) {
-        return false;
+        if (is_wp_error($abcd)) {
+            return false;
     }
-    wp_send_json_success($abcd, 200);
-    die();
+        wp_send_json_success($abcd, 200);
+        die();
 
 
     }
 
     public function getSingleEventData(){
-
+        // $id = intval($_GET["id"]);
+        // $singleEvent =  wp_get_single_post($id, ARRAY_A);
+        // if (is_wp_error($singleEvent)) {
+        //     return false;
+        // }
+        // wp_send_json_success($singleEvent, 200);
+        // die();
         $id = intval($_GET["id"]);
+        $singleEvent = get_post_meta($id);
 
-        // var_dump($id);
-        $singleEvent =  wp_get_single_post($id, ARRAY_A);
         if (is_wp_error($singleEvent)) {
             return false;
         }
         wp_send_json_success($singleEvent, 200);
         die();
 
-
-
     }
 
     public function deleteEvent(){
         $id = intval($_POST["id"]);
-        // var_dump($id);
+      
         $delete =wp_delete_post($id);
 
         if (is_wp_error($delete)) {
@@ -151,56 +126,86 @@ class AdminAjaxHandler
         die();
     }
 
-    public function editEventData(){
+    public function getSingleCategoryData(){
+        $id = intval($_POST["id"]);
+    }
+    public function insertEventCategoryData(){
+        if (!wp_verify_nonce($_POST["ems_nonce"], "ems_ajax_nonce")) {
+            return wp_send_json_error("Busted! Please login!", 400);
+        }
+
+        $value = ["title"];
+        $field_keys = $this->handleEmptyField($value);
+        $categoryData = $this->senitizeInputValue($field_keys);
+
+        if (isset($_POST["id"])) {
+            $id = $_POST["id"];
+        
+            parent::updateCategoryData($id, $categoryData);
+        } else {
+            parent::addCategoryData($categoryData);
+        }
+
+}
+
+    public function getEventCategoryData(){
+        parent::getAllCategoryData();
+
+    }
+
+    public function insertEventOrganizerData(){
 
         if (!wp_verify_nonce($_POST["ems_nonce"], "ems_ajax_nonce")) {
             return wp_send_json_error("Busted! Please login!", 400);
         }
-   $eventData = array(
-    'id' => $_POST['id'],
-   'title' => $_POST['title'],
-   'details' => $_POST['details'],
-   'category' => $_POST['category'],
-   'onlineEvent' => $_POST['onlineEvent'],
-   'url' => $_POST['url'],
-   'startingDate' => $_POST['startingDate'],
-   'startingTime' => $_POST['startingTime'],
-   'endingDate' => $_POST['endingDate'],
-   'endingTime' => $_POST['endingTime'],
-   'limit' => $_POST['limit'],
-   'deadline' => $_POST['deadline'],
-   );
-   var_dump($eventData);
 
-   $postContent = json_encode($eventData);
-
-   
-   $data = array(
-    'ID' => $_POST['id'],
-    'post_title'     => $_POST['title'],
-    'post_content'   =>  $postContent,
-
-    
-);
-
-$formId =  wp_update_post($data);
-    
-
-if($formId>0){
-    return wp_send_json_success(
-        [
-            "success" => __("Successfully Edit Data", "event-management-system"),
-        ],
-        200);
-
-    }
-    else{
-                 return wp_send_json_error(
-            [
-                "error" => __("Error while updating data", "event-management-system"),
-            ],
-            500);
+        $value = ["name","details"];
+        $field_keys = $this->handleEmptyField($value);
+        $organizerData = $this->senitizeInputValue($field_keys);
+        if (isset($_POST["id"])) {
+            $id = $_POST["id"];
+        
+            parent::updateCategoryData($id, $categoryData);
+        } else {
+            parent::addOrganizerData($organizerData);
+        }
     }
 
-}
+    public function getOrganizerData(){
+        parent::getAllOrganizerData();
+    }
+
+
+
+    public function senitizeInputValue($field_keys)
+    {
+        $inputValue = $field_keys;
+        $data = [];
+        foreach ($inputValue as $field_key) {
+            if($data[$field_key == 'details']){
+                $data[$field_key] = sanitize_textarea_field($_POST[$field_key]);
+            }else{
+            $data[$field_key] = sanitize_text_field($_POST[$field_key]);
+            }
+        }
+        return $data;
+    }
+
+    public function handleEmptyField($value)
+    {
+        $inputValue = $value;
+        $errors = [];
+        foreach ($inputValue as $field_key) {
+            if (empty($_POST[$field_key])) {
+                $errors[$field_key] = "Please enter " . $field_key;
+            }
+        }
+        if (!empty($errors)) {
+            return wp_send_json_error($errors, 400);
+        }
+
+        return $inputValue;
+    }
+
+    
 }

@@ -10,13 +10,8 @@
     <el-table-column label="Date" prop="post_date" />
     <el-table-column label="Event" prop="post_title" />
     <el-table-column align="right">
-        <template #header>
-            <el-input size="small" placeholder="Type to search" />
-        </template>
         <template #default="scope">
-
             <el-button size="small" type="primary" @click="showData(scope.$index, scope.row)">View</el-button>
-
             <el-button size="small" @click="editEventData(scope.$index, scope.row)">Edit</el-button>
             <el-button size="small" type="danger" @click="deletEvent(scope.$index, scope.row)">Delete</el-button>
 
@@ -79,9 +74,6 @@ export default {
                         message: 'Successfully deleted data',
                         type: 'success',
                     })
-                    // setTimeout(function () {
-                    //     // window.location.reload();
-                    // }, 500);
 
                 },
                 error: function (error) {
@@ -95,7 +87,6 @@ export default {
             this.$router.push({
                 path: `/show-event/${row.ID}`
             })
-            // console.log(row.ID);
 
         },
         fetchData() {
@@ -109,7 +100,6 @@ export default {
                 },
                 success: function (data) {
                     that.events = data.data;
-                    console.log(that.events);
                 }
             });
 

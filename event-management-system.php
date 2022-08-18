@@ -55,6 +55,8 @@ final class EventManagementSystem
     register_activation_hook(__FILE__, [$this, 'activate']);
     register_deactivation_hook(__FILE__, [$this, 'deactivate']);
     add_action('plugins_loaded', [$this, 'init_plugin']);
+      //hook into the init action and call create_book_taxonomies when it fires
+    
   }
 
   /**
@@ -84,6 +86,7 @@ final class EventManagementSystem
     return $instance;
   }
 
+  
   /**
    * On Plugin Activation
    * @since 1.0.0
@@ -92,6 +95,7 @@ final class EventManagementSystem
   {
     $installer = new \EMS\Includes\Installer();
     $installer->run();
+  
   }
 
   /**
@@ -110,9 +114,11 @@ final class EventManagementSystem
   public function init_plugin()
   {
     new \EMS\Includes\Assets();
+    new \EMS\Includes\Models();
     new \EMS\Includes\AdminAjaxHandler();
     if (is_admin()) {
       new \EMS\Includes\Admin();
+      new \EMS\Includes\PostType();
     }
   }
 }
@@ -123,8 +129,12 @@ final class EventManagementSystem
  */
 function eventManagementSystem()
 {
+
   return EventManagementSystem::init();
+
 }
 
 // Run the Plugin
 eventManagementSystem();
+
+

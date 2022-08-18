@@ -30,17 +30,26 @@ class Admin
         [$this, 'adminMenuPage']
     );
 
-    $addEvent = add_submenu_page(
+    $addEventCategory = add_submenu_page(
         "event-management-system",
-        __("Add Event", "event-management-system"),
-        __("Add Event", "event-management-system"),
+        __("Event Categories", "event-management-system"),
+        __("Event Categories", "event-management-system"),
         "manage_options",
-        "event-management-system#/addEvent",
+        "event-management-system#/eventCategory",
         [$this, "adminMenuPage"]
     );
+    $addEventOrganizer = add_submenu_page(
+      "event-management-system",
+      __("Event Organizer", "event-management-system"),
+      __("Event Organizer", "event-management-system"),
+      "manage_options",
+      "event-management-system#/eventOrganizer",
+      [$this, "adminMenuPage"]
+  );
 
     add_action("load-" . $hook, [$this, "initHooks"]);
-    add_action("load-" . $addEvent, [$this, "initHooks"]);
+    add_action("load-" . $addEventCategory, [$this, "initHooks"]);
+    add_action("load-" . $addEventOrganizer, [$this, "initHooks"]);
 
 
   }

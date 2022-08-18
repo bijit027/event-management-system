@@ -1,7 +1,7 @@
 <template>
     <div>
-        {{ events.post_content}}
-        {{ val }}
+        {{ events}}
+        
 
     </div>
 </template>
@@ -32,8 +32,8 @@
             },
             success: function (data) {
                 that.events = data.data;
-                that.val = that.events.title;
-                console.log(that.events);
+                // that.val = that.events.title;
+                // console.log(that.events);
             }
         });
 
