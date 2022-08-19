@@ -19,14 +19,14 @@
                 <el-form-item label="Category">
                     <el-col :span="8">
                         <el-select placeholder="Please select your category" v-model="event.category">
-                            <el-option v-for="value in category" :key="value.term_id" :label="value.name" :value="value.term_id" />
+                            <el-option v-for="value in category" :key="value.term_id" :label="value.name" :value="value.name" />
                         </el-select>
                     </el-col>
                 </el-form-item>
                 <el-form-item label="Organizer">
                     <el-col :span="8">
                         <el-select placeholder="Select Organizer" v-model="event.organizer">
-                            <el-option v-for="value in organizer" :key="value.ID" :label="value.post_title" :value="value.post_title" />
+                            <el-option v-for="value in organizer" :key="value.ID" :label="value.name" :value="value.name" />
                         </el-select>
                     </el-col>
                 </el-form-item>
@@ -133,6 +133,7 @@ export default {
                 },
                 success: function (data) {
                     that.organizer = data.data;
+                    console.log(that.organizer);
                 }
             });
 

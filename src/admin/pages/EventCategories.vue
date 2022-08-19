@@ -102,7 +102,7 @@ export default {
                 url: ajax_url.ajaxurl,
                 dataType: 'json',
                 data: {
-                    action: "ems_delete_event",
+                    action: "ems_delete_category",
                     id: row.term_id,
                     ems_nonce: ajax_url.ems_nonce,
                 },

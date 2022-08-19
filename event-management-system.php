@@ -69,6 +69,8 @@ final class EventManagementSystem
     define('EMS_PLUGIN_PATH', trailingslashit(plugin_dir_path(__FILE__)));
     define('EMS_PLUGIN_URL', trailingslashit(plugins_url('', __FILE__)));
     define('EMS_ASSETS', EMS_PLUGIN_URL . '/assets');
+    define("EMS_CONTACTS_BASE_DIR", plugin_dir_url(__FILE__));
+    define("EMS_CONTACTS_PATH", __DIR__);
   }
 
   /**
@@ -119,6 +121,8 @@ final class EventManagementSystem
     if (is_admin()) {
       new \EMS\Includes\Admin();
       new \EMS\Includes\PostType();
+    }else {
+      new \EMS\Includes\Frontend();
     }
   }
 }

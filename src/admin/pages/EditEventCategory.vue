@@ -46,7 +46,9 @@ export default {
                 },
                 success: function (data) {
                     that.eventCategory = data.data;
-                    that.value.title = that.eventCategory;
+                    
+                    that.value.title = that.eventCategory.name;
+                    console.log(that.eventCategory.name);
                     that.value.button = 'Update';
 
                 }

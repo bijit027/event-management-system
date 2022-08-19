@@ -12,13 +12,13 @@
         </el-col>
         <el-col :span="12">
             <el-table :data="organizers" style="width: 100%">
-                <el-table-column label="Date" prop="post_date" />
-                <el-table-column label="Name" prop="post_title" />
+                <el-table-column label="ID" prop="term_id" />
+                <el-table-column label="Name" prop="name" />
 
                 <el-table-column align="right">
                     <template #default="scope">
                         <el-button size="small" @click="editCategroy(scope.$index, scope.row)">Edit</el-button>
-                        <el-button size="small" type="danger" @click="deletCategory(scope.$index, scope.row)">Delete</el-button>
+                        <el-button size="small" type="danger" @click="deletOrganizer(scope.$index, scope.row)">Delete</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -66,7 +66,7 @@ export default {
     methods: {
         editCategroy(index, row) {
             this.$router.push({
-                path: `/eventOrganizer/${row.ID}`
+                path: `/eventOrganizer/${row.term_id}`
             })
 
         },
@@ -117,15 +117,15 @@ export default {
 
         },
 
-        deletCategory(index, row) {
+        deletOrganizer(index, row) {
             const that = this;
             jQuery.ajax({
                 type: "POST",
                 url: ajax_url.ajaxurl,
                 dataType: 'json',
                 data: {
-                    action: "ems_delete_event",
-                    id: row.ID,
+                    action: "ems_delete_organizer",
+                    id: row.term_id,
                     ems_nonce: ajax_url.ems_nonce,
                 },
                 success: function (data) {
@@ -149,7 +149,6 @@ export default {
                 path: `/show-event/${row.ID}`
             })
 
-
         },
         fetchData() {
             const that = this;
@@ -158,10 +157,10 @@ export default {
                 url: ajax_url.ajaxurl,
                 dataType: 'json',
                 data: {
-                    action: "ems_get_event_category_data",
+                    action: "ems_get_organizer_data",
                 },
                 success: function (data) {
-                    that.category = data.data;
+                    that.organizers = data.data;
                 }
             });
 

@@ -37,6 +37,12 @@ public function custom_taxonomy() {
     'show_ui' => false,
 
   ));
+
+  register_taxonomy('eventOrganizer',array('ems_event_data'), array(
+    'hierarchical' => true,
+    'show_ui' => false,
+
+  ));
 }
 
 }

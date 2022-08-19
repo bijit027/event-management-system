@@ -44,7 +44,18 @@ class AdminAjaxHandler extends Models
             ],
             "ems_get_single_category_data" => [
                 "function" => [$this, "getSingleCategoryData"]
+            ],
+            "ems_get_single_organizer_data" => [
+                "function" => [$this, "getSingleOrganizerData"]
+            ],
+            "ems_delete_organizer" => [
+                "function" => [$this, "deleteOrganizer"]
+            ],
+            "ems_delete_category" => [
+                "function" => [$this, "deleteCategory"]
             ]
+
+            
  
         ];
     }
@@ -82,8 +93,22 @@ class AdminAjaxHandler extends Models
             'orderby' => 'date',
             'order' => 'ASC',
             'post_type'=>'ems_event_data',
-            'post_status' => 'any'
+            'post_status' => 'any',
         );
+
+        //This commented code returns custom posts under specific terms and taxonomy
+
+        // $args = get_posts(array(
+        //     'numberposts' => -1,
+        //     'post_type' => 'ems_event_data',
+        //     'tax_query' => array(
+        //         array(
+        //         'taxonomy' => 'eventCategory',
+        //         'field' => 'term_id',
+        //         'terms' => 45)
+        //     ))
+        // );
+
         $abcd =   get_posts($args);
       
         if (is_wp_error($abcd)) {
@@ -127,7 +152,9 @@ class AdminAjaxHandler extends Models
     }
 
     public function getSingleCategoryData(){
-        $id = intval($_POST["id"]);
+        $id = intval($_GET["id"]);
+
+        parent::fetchSingleCategory($id);
     }
     public function insertEventCategoryData(){
         if (!wp_verify_nonce($_POST["ems_nonce"], "ems_ajax_nonce")) {
@@ -164,8 +191,8 @@ class AdminAjaxHandler extends Models
         $organizerData = $this->senitizeInputValue($field_keys);
         if (isset($_POST["id"])) {
             $id = $_POST["id"];
-        
-            parent::updateCategoryData($id, $categoryData);
+            $prevValue = sanitize_text_field($_POST['prevValue']);
+            parent::updateOrganizerData($id, $organizerData, $prevValue);
         } else {
             parent::addOrganizerData($organizerData);
         }
@@ -173,6 +200,22 @@ class AdminAjaxHandler extends Models
 
     public function getOrganizerData(){
         parent::getAllOrganizerData();
+    }
+
+    public function deleteOrganizer(){
+        $id = intval($_POST["id"]);
+        parent::deleteOrganizerData($id);
+
+    }
+
+    public function getSingleOrganizerData(){
+        $id = intval($_GET["id"]);
+        parent::getSingleOrganizer($id);
+    }
+
+    public function deleteCategory(){
+        $id = intval($_POST["id"]);
+        parent::deleteCategoryData($id);
     }
 
 
@@ -184,7 +227,10 @@ class AdminAjaxHandler extends Models
         foreach ($inputValue as $field_key) {
             if($data[$field_key == 'details']){
                 $data[$field_key] = sanitize_textarea_field($_POST[$field_key]);
-            }else{
+            }elseif($data[$field_key == 'url']){
+                $data[$field_key] = sanitize_url($_POST[$field_key]);
+            }
+            else{
             $data[$field_key] = sanitize_text_field($_POST[$field_key]);
             }
         }
