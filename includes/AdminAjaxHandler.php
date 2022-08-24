@@ -55,8 +55,6 @@ class AdminAjaxHandler extends Models
                 "function" => [$this, "deleteCategory"]
             ]
 
-            
- 
         ];
     }
 
@@ -121,34 +119,13 @@ class AdminAjaxHandler extends Models
     }
 
     public function getSingleEventData(){
-        // $id = intval($_GET["id"]);
-        // $singleEvent =  wp_get_single_post($id, ARRAY_A);
-        // if (is_wp_error($singleEvent)) {
-        //     return false;
-        // }
-        // wp_send_json_success($singleEvent, 200);
-        // die();
         $id = intval($_GET["id"]);
-        $singleEvent = get_post_meta($id);
-
-        if (is_wp_error($singleEvent)) {
-            return false;
-        }
-        wp_send_json_success($singleEvent, 200);
-        die();
-
+        parent::fetchSingleEventData($id);
     }
 
     public function deleteEvent(){
         $id = intval($_POST["id"]);
-      
-        $delete =wp_delete_post($id);
-
-        if (is_wp_error($delete)) {
-            return false;
-        }
-        wp_send_json_success($delete, 200);
-        die();
+        parent::deleteEventData($id);
     }
 
     public function getSingleCategoryData(){
@@ -225,15 +202,28 @@ class AdminAjaxHandler extends Models
         $inputValue = $field_keys;
         $data = [];
         foreach ($inputValue as $field_key) {
-            if($data[$field_key == 'details']){
+            if($field_key == 'details'){
+                if(sanitize_textarea_field($_POST[$field_key]) != '' ){
                 $data[$field_key] = sanitize_textarea_field($_POST[$field_key]);
-            }elseif($data[$field_key == 'url']){
-                $data[$field_key] = sanitize_url($_POST[$field_key]);
+                }else{
+                    $this->sanitizationError($field_key);
+                }
+            }elseif($field_key == 'url'){
+                if(sanitize_url($_POST[$field_key]) != '' ){
+                    $data[$field_key] = sanitize_url($_POST[$field_key]);
+                }else{
+                    $this->sanitizationError($field_key);
+                }
             }
             else{
-            $data[$field_key] = sanitize_text_field($_POST[$field_key]);
+                if(sanitize_text_field($_POST[$field_key]) != '' ){
+                    $data[$field_key] = sanitize_text_field($_POST[$field_key]);
+                }else{
+                    $this->sanitizationError($field_key);
+                }
             }
         }
+        
         return $data;
     }
 
@@ -251,6 +241,15 @@ class AdminAjaxHandler extends Models
         }
 
         return $inputValue;
+    }
+
+    public function sanitizationError($field_key){
+        return wp_send_json_error(
+            [
+                $field_key => __('Something suspicious in '.$field_key, " event-management-system"),
+            ],
+            400);
+
     }
 
     

@@ -1,7 +1,7 @@
 <template>
 <div class="wrap">
     <el-card class="box-card">
-        <CategoryInputForm v-bind:eventCategory="value" @form-submit="onSubmit" />
+        <CategoryInputForm v-bind:eventCategory="value" v-bind:errors="errors" @form-submit="onSubmit" />
     </el-card>
 </div>
 </template>
@@ -22,6 +22,7 @@ export default {
                 title: '',
                 button: '',
             },
+            erros:[]
         }
     },
     components: {
@@ -72,13 +73,14 @@ export default {
                 success: function (data) {
                     ElMessage({
                         showClose: true,
-                        message: 'Successfully add category',
+                        message: data.data.message,
                         type: 'success',
                     })
 
                 },
                 error: function (error) {
-                    ElMessage.error('Oops, error in inserting category.')
+                    that.errors = error.responseJSON.data;
+                    // ElMessage.error("Error while updating data")
 
                 }
             });

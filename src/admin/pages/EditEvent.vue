@@ -1,5 +1,5 @@
 <template>
-<InputForm v-bind:event="val" @form-submit="onSubmit" />
+<InputForm v-bind:event="val" v-bind:errors="errors" @form-submit="onSubmit" />
 </template>
 
 <script>
@@ -21,7 +21,8 @@ export default {
                 button: '',
             },
             organizer: {},
-            ID: ''
+            ID: '',
+            errors: [],
         }
     },
     components: {
@@ -54,7 +55,6 @@ export default {
         },
 
         onSubmit() {
-            console.log(this.event);
             const that = this;
             console.log(ajax_url.ajaxurl);
             jQuery.ajax({
@@ -81,17 +81,18 @@ export default {
                 success: function (data) {
                     ElMessage({
                         showClose: true,
-                        message: 'Successfully edited data',
+                        message: data.data.message,
                         type: 'success',
                     })
 
                 },
                 error: function (error) {
-                    ElMessage({
-                        message: 'Warning, this is a warning message.',
-                        type: 'warning',
-                    })
-                },
+                    that.errors = error.responseJSON.data;
+                    if (error.responseJSON.data.error) {
+                        ElMessage.error(error.responseJSON.data.error)
+                    }
+
+                }
             });
 
         }
@@ -105,6 +106,5 @@ export default {
     width: 60%;
     margin: auto;
     margin-top: 50px;
-    /* margin: 50px 50px 50px 50px; */
 }
 </style>

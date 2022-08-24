@@ -3,10 +3,13 @@ import AllEvents from "../admin/pages/AllEvents.vue";
 import AddEvent from "../admin/pages/AddEvent.vue";
 import ViewEvent from "../admin/pages/ViewEvent.vue";
 import EditEvent from "../admin/pages/EditEvent.vue";
-import AddEventCategory from "../admin/pages/EventCategories.vue";
+import EventCategory from "../admin/pages/EventCategories.vue";
 import EditEventCategory from "../admin/pages/EditEventCategory.vue";
 import EventOrganizer from "../admin/pages/EventOrganizer.vue";
 import EditEventOrganizer from "../admin/pages/EditEventOrganizer.vue";
+import AddEventCategory from "../admin/pages/AddEventCategory.vue";
+import AddEventOrganizer from "../admin/pages/AddOrganizer.vue";
+
 const routes = [
     {
         path: "/",
@@ -30,8 +33,8 @@ const routes = [
     },
     {
         path: "/eventCategory",
-        name: "AddEventCategory",
-        component: AddEventCategory,
+        name: "EventCategory",
+        component: EventCategory,
     },
     {
         path: "/eventCategory/:eventID",
@@ -48,6 +51,17 @@ const routes = [
         name: "EditEventOrganizer",
         component: EditEventOrganizer,
     },
+    {
+        path: "/addEventCategory",
+        name: "AddEventCategory",
+        component: AddEventCategory,
+    },
+    {
+        path: "/addEventOrganizer",
+        name: "AddEventOrganizer",
+        component: AddEventOrganizer,
+    },
+
 ];
 
 const router = createRouter({

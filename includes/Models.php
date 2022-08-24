@@ -23,11 +23,11 @@ class Models
 
        $formId =  wp_insert_post($data);
 
-
-       wp_set_object_terms($formId,$_POST['category'],'eventCategory');
+            // var_dump($formId);
+    //    wp_set_object_terms($formId,$_POST['category'],'eventCategory');
     
 
-       if($formId>0){
+       if(!is_wp_error($formId)){
         return wp_send_json_success(
             [
                 "message" => __("Successfully inserted data", " event-management-system"),
@@ -38,6 +38,42 @@ class Models
         return wp_send_json_error(
             [
                 "error" => __("Error while inserting data", " event-management-system"),
+            ],
+            500
+        );
+       }
+    }
+
+    public function fetchSingleEventData($id){
+        $singleEvent = get_post_meta($id);
+       
+
+        if (wp_validate_boolean($singleEvent)) {
+            return wp_send_json_success($singleEvent,200);
+           }else{
+            return wp_send_json_error(
+                [
+                    "error" => __("Error while fetching data", " event-management-system"),
+                ],
+                500
+            );
+           }
+    }
+
+    public function deleteEventData($id){
+        $delete =wp_delete_post($id);
+
+        if (!empty($delete)) {
+            return wp_send_json_success(
+            [
+                "message" => __("Successfully deleted data", " event-management-system"),
+            ],
+            200
+        );
+       }else{
+        return wp_send_json_error(
+            [
+                "error" => __("Error while deleting data", " event-management-system"),
             ],
             500
         );
@@ -68,7 +104,7 @@ class Models
         //     }
 
 
-        extract($organizerData);
+        extract($organizerData); //extract $name and $details
 
 //         $data = array(
 //             'post_title'     => 'Category Data',
@@ -88,22 +124,34 @@ class Models
 
 
 
-   if($id['term_id']>0){
-    wp_send_json_success($id, 200);
-   }
-        
+   if(!is_wp_error($id)){
+    return wp_send_json_success(
+        [
+            "message" => __("Successfully inserted data", " event-management-system"),
+        ],
+        200
+    );
+   }else{
+    return wp_send_json_error(
+        [
+            "error" => __("Error while inserting data", " event-management-system"),
+        ],
+        500
+    );
+   }  
 
     }
 
     public function updateOrganizerData($id,$organizerData){
-        extract($organizerData); //It will extract name , $details
-     
-      $id = wp_update_term($id,'eventOrganizer', array (
+        extract($organizerData); //It will extract $name , $details
+      $formId = wp_update_term($id,'eventOrganizer', array (
             "name" => $name,
             "slug" => $name,
             "description" => $details
   
         ));
+        
+     
 
     
 
@@ -111,7 +159,22 @@ class Models
 
     //     var_dump($details);
 
-        wp_send_json_success($id, 200);
+    if(!is_wp_error($formId)){
+        return wp_send_json_success(
+            [
+                "message" => __("Successfully edited data", " event-management-system"),
+            ],
+            200
+        );
+       }else{
+        return wp_send_json_error(
+            [
+                "error" => __("Error while editing data", " event-management-system"),
+            ],
+            500
+        );
+       }
+
 
 
     }
@@ -155,7 +218,7 @@ class Models
 
         $postContent = json_encode($eventData);
 
-        extract($eventData);
+        extract($eventData); //Extract $id, $title , $postContent, $metaArray
         $metaArray = array(
             'eventData' =>  $postContent,
         );
@@ -169,18 +232,18 @@ class Models
      );
      
      $formId =  wp_update_post($data);
-         $null = 0;
-     var_dump($formId);
-     if($formId != 0){
+
+     
+     if(!is_wp_error($formId)){
          return wp_send_json_success(
              [
-                 "success" => __("Successfully updated Data", "event-management-system"),
+                 "message" => __("Successfully updated Data", "event-management-system"),
              ],
              200);
      
          }
          else{
-                      return wp_send_json_error(
+            return wp_send_json_error(
                  [
                      "error" => __("Error while updating data", "event-management-system"),
                  ],
@@ -203,11 +266,22 @@ class Models
 
       $id = wp_insert_term($title,'eventCategory');
 
+      
 
-   
-
-       if($formId>0){
-        wp_send_json_success($id, 200);
+      if(!is_wp_error( $id)){
+        return wp_send_json_success(
+            [
+                "message" => __("Successfully inserted data", " event-management-system"),
+            ],
+            200
+        );
+       }else{
+        return wp_send_json_error(
+            [
+                "error" => __("Error while inserting data", " event-management-system"),
+            ],
+            500
+        );
        }
 
      }
@@ -243,12 +317,13 @@ class Models
   
         ));
 
+
          
      
-     if($termID>0){
+     if(!is_wp_error($termID)){
          return wp_send_json_success(
              [
-                 "success" => __("Successfully Edit Data", "event-management-system"),
+                 "message" => __("Successfully Edited Data", "event-management-system"),
              ],
              200);
      
@@ -332,10 +407,10 @@ class Models
         
        $delete = wp_delete_term( $id, 'eventOrganizer');
 
-       if($delete == true){
+       if(!is_wp_error($delete)){
         return wp_send_json_success(
             [
-                "message" => __("Successfully delete data", "contact-manager"),
+                "message" => __("successfully deleted data", "event-management-system"),
             ],
             200
         );
@@ -353,10 +428,10 @@ class Models
 
         $delete = wp_delete_term( $id, 'eventCategory');
 
-        if($delete == true){
+        if(!is_wp_error($delete)){
          return wp_send_json_success(
              [
-                 "message" => __("Successfully delete data", "contact-manager"),
+                 "message" => __("Successfully deleted data", "contact-manager"),
              ],
              200
          );

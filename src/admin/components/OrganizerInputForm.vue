@@ -6,11 +6,13 @@
             <el-form-item label="Name">
                 <el-col>
                     <el-input type="text" size="large" v-model="eventOrganizer.name" />
+                    <small class="danger" v-if="errors.name">{{ errors.name }}</small>
                 </el-col>
             </el-form-item>
             <el-form-item label="Details">
                 <el-col>
                     <el-input type="textarea" v-model="eventOrganizer.details" />
+                    <small class="danger" v-if="errors.details">{{ errors.details }}</small>
                 </el-col>
             </el-form-item>
         </div>
@@ -28,7 +30,7 @@
 <script>
 export default {
 
-    props: ['eventOrganizer'],
+    props: ['eventOrganizer','errors'],
     emits: ["form-submit"],
     methods: {
 
@@ -39,6 +41,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style  scoped>
+.danger {
+    color: red;
+}
 
 </style>

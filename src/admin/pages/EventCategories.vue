@@ -2,13 +2,10 @@
 <el-main>
     <div>
         <h2>ALL Events</h2>
+    </div>
+    <el-button type="primary" @click="addCategory()">Add Category</el-button>
    
-    </div>
-    <div class="wrap">
-        <CategoryInputForm v-bind:eventCategory="eventCategory"  @form-submit="onSubmit" />
-    </div>
-
-    <el-table :data="category" style="width: 100%">
+    <el-table :data="displayData" style="width: 100%">
         <el-table-column label="Term ID" prop="term_id" />
         <el-table-column label="Category" prop="name" />
         <el-table-column align="right">
@@ -18,6 +15,12 @@
             </template>
         </el-table-column>
     </el-table>
+ 
+    <el-row>
+    <div class="pagination-block">
+        <el-pagination background layout="sizes,total,prev, pager, next,jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" :page-size="pageSize" :page-sizes="[5,10,15,20]" :total="category.length" />
+    </div>
+    </el-row>
 </el-main>
 </template>
 
@@ -31,15 +34,15 @@ export default {
     components: {
         ElButton
     },
-            components:{
+    components: {
         CategoryInputForm
     },
 
     data() {
         return {
             loading: false,
-            events:[],
-            category:[],
+            events: [],
+            category: [],
             eventCategory: {
                 title: '',
                 button: 'Create'
@@ -47,51 +50,37 @@ export default {
             errorMessage: null,
             showSuccess: '',
             showError: '',
+                  page: 1,
+            pageSize: 5
         }
     },
 
     mounted() {
-
         this.fetchData();
     },
+    computed: {
+        displayData() {
+            if (!this.category || this.category.length === 0) return [];
+            return this.category.slice(this.pageSize * this.page - this.pageSize, this.pageSize * this.page)
+        }
+    },
     methods: {
+        addCategory() {
+            this.$router.push({
+                path: `/addEventCategory`
+            })
+        },
+        handleCurrentChange(val) {
+            this.page = val;
+        },
+        handleSizeChange(val) {
+            this.pageSize = val;
+        },
+
         editCategroy(index, row) {
             this.$router.push({
                 path: `/eventCategory/${row.term_id}`
             })
-
-        },
-        addEvent() {
-            this.$router.push({
-                path: `/addEvent`
-            })
-        },
-        onSubmit() {
-
-            const that = this;
-            console.log(that.eventcategroy);
-            jQuery.ajax({
-                type: "POST",
-                url: ajax_url.ajaxurl,
-                dataType: 'json',
-                data: {
-                    action: "ems_insert_event_category_data",
-                    title: that.eventCategory.title,
-                    ems_nonce: ajax_url.ems_nonce,
-                },
-                success: function (data) {
-                    ElMessage({
-                        showClose: true,
-                        message: 'Successfully add category',
-                        type: 'success',
-                    })
-
-                },
-                error: function (error) {
-                    ElMessage.error('Oops, error in inserting category.')
-
-                }
-            });
 
         },
 
@@ -107,26 +96,18 @@ export default {
                     ems_nonce: ajax_url.ems_nonce,
                 },
                 success: function (data) {
-
                     ElMessage({
                         showClose: true,
-                        message: 'Successfully deleted data',
+                        message: data.data.message,
                         type: 'success',
                     })
 
                 },
                 error: function (error) {
-                    that.showError = 'Something went wrong';
-                    that.errors = error.responseJSON.data;
+                    ElMessage.error(error.responseJSON.data.error)
 
                 },
             });
-        },
-        showData(index, row) {
-            this.$router.push({
-                path: `/show-event/${row.ID}`
-            })
-
         },
         fetchData() {
             const that = this;
@@ -148,8 +129,7 @@ export default {
 }
 </script>
 
-<style scoped>
-.wrap {
-    width: 60%;
-}
+<style>
+
+
 </style>

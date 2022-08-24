@@ -26,9 +26,6 @@ class PostType {
         register_post_type( 'ems_event_data', $args );
     }
 
-
-
-//create a custom taxonomy name it "type" for your posts
 public function custom_taxonomy() {
 	
 

@@ -5,6 +5,7 @@
             <el-form-item label="Add Event Category">
                 <el-col>
                     <el-input type="text" size="large" v-model="eventCategory.title" />
+                    <small class="danger" v-if="errors.title">{{ errors.title }}</small>
                 </el-col>
             </el-form-item>
         </div>
@@ -14,14 +15,13 @@
             </el-form-item>
         </div>
     </el-form>
-
 </div>
 </template>
 
 <script>
 export default {
 
-    props: ['eventCategory'],
+    props: ['eventCategory','errors'],
     emits: ["form-submit"],
     methods: {
 
@@ -32,6 +32,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+.danger {
+    color: red;
+}
 </style>

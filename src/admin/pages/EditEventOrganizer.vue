@@ -1,7 +1,7 @@
 <template>
 <div class="wrap">
     <el-card class="box-card">
-        <OrganizerInputForm v-bind:eventOrganizer="value" @form-submit="onSubmit" />
+        <OrganizerInputForm v-bind:eventOrganizer="value" v-bind:errors="errors" @form-submit="onSubmit" />
     </el-card>
 </div>
 </template>
@@ -23,7 +23,8 @@ export default {
                 details: "",
                 button: "",
             },
-            previousValue: ""
+            previousValue: "",
+            errors: []
 
         };
     },
@@ -47,17 +48,14 @@ export default {
                 },
                 success: function (data) {
                     that.eventOrganizer = data.data;
-                    console.log(that.eventOrganizer);
                     that.value.name = that.eventOrganizer.name;
                     that.value.details = that.eventOrganizer.description,
-                    // that.previousValue = that.eventOrganizer.details,
-                    that.value.button = "Update";
+                        that.value.button = "Update";
                 },
             });
         },
         onSubmit() {
             const that = this;
-            console.log(that.eventcategroy);
             jQuery.ajax({
                 type: "POST",
                 url: ajax_url.ajaxurl,
@@ -67,18 +65,20 @@ export default {
                     id: that.eventCategoryID,
                     name: that.value.name,
                     details: that.value.details,
-                 
                     ems_nonce: ajax_url.ems_nonce,
                 },
                 success: function (data) {
                     ElMessage({
                         showClose: true,
-                        message: "Successfully add category",
+                        message: data.data.message,
                         type: "success",
                     });
                 },
                 error: function (error) {
-                    ElMessage.error("Oops, error in inserting category.");
+                    that.errors = error.responseJSON.data;
+                     if(error.responseJSON.data.error){
+                        ElMessage.error(error.responseJSON.data.error)
+                    }
                 },
             });
         },

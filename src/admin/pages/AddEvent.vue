@@ -1,8 +1,12 @@
 <template>
-   <InputForm v-bind:event="event"  @form-submit="onSubmit" />
+<InputForm v-bind:event="event" v-bind:errors="errors" @form-submit="onSubmit" />
 </template>
 
 <script>
+import {
+    ElButton,
+    ElMessage
+} from 'element-plus';
 import InputForm from "../components/InputForm.vue";
 export default {
 
@@ -12,35 +16,30 @@ export default {
                 title: '',
                 details: '',
                 category: '',
-                organizer:'',
+                organizer: '',
                 onlineEvent: '',
                 url: '',
                 startingDate: '',
-                startingTime:'',
+                startingTime: '',
                 endingDate: '',
-                endingTime:'',
+                endingTime: '',
                 limit: '',
                 deadline: '',
                 button: 'Create',
             },
 
-      
-           
             showSuccess: '',
             showError: '',
+            errors: [],
         }
     },
-    components:{
+    components: {
         InputForm
     },
 
-
-        methods: {
-
+    methods: {
         onSubmit() {
-      
-          const that = this;
-            console.log(ajax_url.ajaxurl);
+            const that = this;
             jQuery.ajax({
                 type: "POST",
                 url: ajax_url.ajaxurl,
@@ -59,23 +58,27 @@ export default {
                     endingTime: that.event.endingTime,
                     limit: that.event.limit,
                     deadline: that.event.deadline,
-   
                     ems_nonce: ajax_url.ems_nonce,
                 },
                 success: function (data) {
-
+                    ElMessage({
+                        showClose: true,
+                        message: data.data.message,
+                        type: 'success',
+                    })
                 },
                 error: function (error) {
-                    that.showError = 'Something went wrong';
-                   
-                     }
-        });
+                    that.errors = error.responseJSON.data;
+                    if (error.responseJSON.data.error) {
+                        ElMessage.error(error.responseJSON.data.error)
+                    }
+                }
+            });
 
         }
     }
-   
-        
-    }
+
+}
 </script>
 
 <style scoped>
@@ -88,7 +91,8 @@ export default {
     margin-left: 20px;
     margin-right: 10px;
 }
-.box-card{
+
+.box-card {
     width: 60%;
     margin: auto;
     margin-top: 50px;

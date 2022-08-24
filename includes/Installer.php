@@ -8,14 +8,11 @@ class Installer
   {
     
   }
-
   public function run()
   {
     $this->add_version();
     
   }
-
-
   public function add_version()
   {
     $is_installed = get_option('ems_is_installed');

@@ -20,6 +20,10 @@ class Assets
       "ajaxurl" => admin_url("admin-ajax.php"),
       "ems_nonce" => wp_create_nonce("ems_ajax_nonce"),
   ]);
+  wp_localize_script("ems_frontend_script", "ajax_url", [
+    "ajaxurl" => admin_url("admin-ajax.php"),
+    "ems_frontend_nonce" => wp_create_nonce("ems_ajax_frontend_nonce"),
+]);
     $this->register_styles($this->get_styles());
   }
 
@@ -52,6 +56,12 @@ class Assets
         'version' => filemtime(EMS_PLUGIN_PATH . '/assets/admin/admin.js'),
         'in_footer' => true
       ],
+      "ems_frontend_script" => [
+        "src" => EMS_CONTACTS_BASE_DIR . "assets/js/eventCard.js",
+        "deps" => ["jquery"],
+        "version" => filemtime(EMS_PLUGIN_PATH . "assets/js/eventCard.js"),
+        "in_footer" => true,
+    ],
     ];
   }
 

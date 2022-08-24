@@ -1,19 +1,20 @@
 <template>
 <el-card class="box-card">
     <div class="container">
-
         <div class="wrap">
             <el-form label-width="100px">
                 <div class="form-item">
                     <el-form-item label="Event Title">
                         <el-col>
                             <el-input type="text" size="large" v-model="event.title" />
+                            <small class="danger" v-if="errors.title">{{ errors.title }}</small>
                         </el-col>
                     </el-form-item>
                 </div>
                 <el-form-item label="Event Details">
                     <el-col>
                         <el-input type="textarea" v-model="event.details" />
+                        <small class="danger" v-if="errors.details">{{ errors.details }}</small>
                     </el-col>
                 </el-form-item>
                 <el-form-item label="Category">
@@ -21,6 +22,7 @@
                         <el-select placeholder="Please select your category" v-model="event.category">
                             <el-option v-for="value in category" :key="value.term_id" :label="value.name" :value="value.name" />
                         </el-select>
+                        <small class="danger" v-if="errors.category">{{ errors.category }}</small>
                     </el-col>
                 </el-form-item>
                 <el-form-item label="Organizer">
@@ -28,6 +30,7 @@
                         <el-select placeholder="Select Organizer" v-model="event.organizer">
                             <el-option v-for="value in organizer" :key="value.ID" :label="value.name" :value="value.name" />
                         </el-select>
+                        <small class="danger" v-if="errors.organizer">{{ errors.organizer }}</small>
                     </el-col>
                 </el-form-item>
                 <el-form-item label="Online Event">
@@ -36,46 +39,56 @@
                         <el-radio label="No" />
 
                     </el-radio-group>
+                    <small class="danger" v-if="errors.onlineEvent">{{ errors.onlineEvent }}</small>
                 </el-form-item>
                 <el-form-item label="Banner Url">
                     <el-col :span="8">
                         <el-input v-model="event.url" />
+                        <small class="danger" v-if="errors.url">{{ errors.url }}</small>
                     </el-col>
                 </el-form-item>
 
-                <el-form-item label="Event Date">
+                <el-form-item label="Starting Date">
                     <el-col :span="8">
                         <el-date-picker type="date" placeholder="Pick a date" style="width: 100%" v-model="event.startingDate" />
+                        <small class="danger" v-if="errors.startingDate">{{ errors.startingDate }}</small>
                     </el-col>
+               
                 </el-form-item>
 
-                <el-form-item label="ending Time">
+                <el-form-item label="Starting Time">
 
                     <el-col :span="8">
                         <el-time-picker type="time" placeholder="Pick a time" style="width: 100%" v-model="event.startingTime" />
+                        <small class="danger" v-if="errors.startingTime">{{ errors.startingTime }}</small>
                     </el-col>
+
                 </el-form-item>
 
-                <el-form-item label="End time">
+                <el-form-item label="Ending Date">
                     <el-col :span="8">
                         <el-date-picker type="date" placeholder="Pick a date" style="width: 100%" v-model="event.endingDate" />
+                        <small class="danger" v-if="errors.endingDate">{{ errors.endingDate }}</small>
                     </el-col>
                 </el-form-item>
                 <el-form-item label="Ending Time">
 
                     <el-col :span="8">
                         <el-time-picker type="time" placeholder="Pick a time" style="width: 100%" v-model="event.endingTime" />
+                        <small class="danger" v-if="errors.endingTime">{{ errors.endingTime }}</small>
                     </el-col>
 
                 </el-form-item>
                 <el-form-item label="Limit">
                     <el-col :span="8">
                         <el-input-number :min="1" v-model="event.limit" />
+                        <small class="danger" v-if="errors.limit">{{ errors.limit }}</small>
                     </el-col>
                 </el-form-item>
                 <el-form-item label="Deadline">
                     <el-col :span="8">
                         <el-date-picker type="date" placeholder="Pick a date" style="width: 100%" v-model="event.deadline" />
+                        <small class="danger" v-if="errors.deadline">{{ errors.deadline }}</small>
                     </el-col>
                 </el-form-item>
 
@@ -91,7 +104,7 @@
 <script>
 export default {
 
-    props: ['event'],
+    props: ['event','errors'],
     emits: ["form-submit"],
 
     data() {
@@ -120,7 +133,6 @@ export default {
                     that.category = data.data;
                 }
             });
-
         },
         fetchOrganizer() {
             const that = this;
@@ -133,7 +145,6 @@ export default {
                 },
                 success: function (data) {
                     that.organizer = data.data;
-                    console.log(that.organizer);
                 }
             });
 
@@ -160,5 +171,8 @@ export default {
     width: 60%;
     margin: auto;
     margin-top: 50px;
+}
+.danger {
+    color: red;
 }
 </style>

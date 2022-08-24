@@ -19,6 +19,7 @@ class Shortcode
     public function loadAssets()
     {
         wp_enqueue_style("ems_frontend_css", EMS_CONTACTS_BASE_DIR . "assets/css/frontend.css");
+        wp_enqueue_script("ems_frontend_script", EMS_CONTACTS_BASE_DIR . "assets/js/eventCard.js",  ['jquery'], true);
     }
 
     /**
