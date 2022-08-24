@@ -118,10 +118,8 @@ export default {
                     that.events = data.data;
                 }
             });
-
         },
     }
-
 }
 </script>
 

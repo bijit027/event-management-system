@@ -7,7 +7,7 @@
         <el-table-column label="Name" prop="name" />
         <el-table-column align="right">
             <template #default="scope">
-                <el-button size="small" @click="editCategroy(scope.$index, scope.row)">Edit</el-button>
+                <el-button size="small" @click="editOrganizer(scope.$index, scope.row)">Edit</el-button>
                 <el-button size="small" type="danger" @click="deletOrganizer(scope.$index, scope.row)">Delete</el-button>
             </template>
         </el-table-column>
@@ -76,7 +76,7 @@ export default {
         handleSizeChange(val) {
             this.pageSize = val;
         },
-        editCategroy(index, row) {
+        editOrganizer(index, row) {
             this.$router.push({
                 path: `/eventOrganizer/${row.term_id}`
             })
@@ -124,20 +124,6 @@ export default {
                     ElMessage.error(error.responseJSON.data.error)
 
                 },
-            });
-        },
-        fetchData() {
-            const that = this;
-            jQuery.ajax({
-                type: "GET",
-                url: ajax_url.ajaxurl,
-                dataType: 'json',
-                data: {
-                    action: "ems_get_organizer_data",
-                },
-                success: function (data) {
-                    that.organizers = data.data;
-                }
             });
         },
     }

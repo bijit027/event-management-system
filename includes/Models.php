@@ -13,10 +13,10 @@ class Models
             'eventData' =>  $finalData,
         );
         $data = array(
-            'post_title'     => $_POST['title'],
-            'post_content'   =>  $finalData,
-            'post_type' =>    'ems_event_data',
-            'meta_input' => $metaArray,
+            'post_title'    =>  $_POST['title'],
+            'post_content'  =>  $finalData,
+            'post_type'     =>  'ems_event_data',
+            'meta_input'    =>  $metaArray,
         );
 
         $formId =  wp_insert_post($data);
@@ -97,9 +97,9 @@ class Models
     public function updateOrganizerData($id,$organizerData){
         extract($organizerData); //It will extract $name , $details
         $formId = wp_update_term($id,'eventOrganizer', array (
-            "name" => $name,
-            "slug" => $name,
-            "description" => $details
+            "name"         => $name,
+            "slug"         => $name,
+            "description"  => $details
   
         ));
     if(!is_wp_error($formId)){

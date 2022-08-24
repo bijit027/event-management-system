@@ -81,7 +81,6 @@ export default {
             this.$router.push({
                 path: `/eventCategory/${row.term_id}`
             })
-
         },
 
         deletCategory(index, row) {

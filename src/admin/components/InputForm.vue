@@ -48,7 +48,7 @@
                     </el-col>
                 </el-form-item>
 
-                <el-form-item label="Starting Date" prop="startingDate">
+                <el-form-item label="Start Date" prop="startingDate">
                     <el-col :span="8">
                         <el-date-picker type="date" placeholder="Pick a date" style="width: 100%" v-model="event.startingDate" />
                         <small class="danger" v-if="errors.startingDate">{{ errors.startingDate }}</small>
@@ -56,7 +56,7 @@
 
                 </el-form-item>
 
-                <el-form-item label="Starting Time" prop="startingTime">
+                <el-form-item label="Start Time" prop="startingTime">
 
                     <el-col :span="8">
                         <el-time-picker type="time" placeholder="Pick a time" style="width: 100%" v-model="event.startingTime" />
@@ -65,13 +65,13 @@
 
                 </el-form-item>
 
-                <el-form-item label="Ending Date" prop="endingDate">
+                <el-form-item label="End Date" prop="endingDate">
                     <el-col :span="8">
                         <el-date-picker type="date" placeholder="Pick a date" style="width: 100%" v-model="event.endingDate" />
                         <small class="danger" v-if="errors.endingDate">{{ errors.endingDate }}</small>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="Ending Time" prop="endingTime">
+                <el-form-item label="End Time" prop="endingTime">
                     <el-col :span="8">
                         <el-time-picker type="time" placeholder="Pick a time" style="width: 100%" v-model="event.endingTime" />
                         <small class="danger" v-if="errors.endingTime">{{ errors.endingTime }}</small>

@@ -13,10 +13,7 @@ export default {
     data() {
         return {
             eventID: this.$route.params.eventID,
-
-            events: {
-
-            },
+            events: {},
             val: {
                 button: '',
             },

@@ -17,7 +17,6 @@ class AdminAjaxHandler extends Models
             "ems_insert_event_data" => [
                 "function" => [$this, "insertEventData"],
             ],
-
             "ems_get_event_data" => [
                 "function" => [$this, "getEventData"]
             ],
@@ -130,7 +129,6 @@ class AdminAjaxHandler extends Models
 
     public function getEventCategoryData(){
         parent::getAllCategoryData();
-
     }
 
     public function insertEventOrganizerData(){
@@ -222,8 +220,5 @@ class AdminAjaxHandler extends Models
                 $field_key => __('Something suspicious in '.$field_key, " event-management-system"),
             ],
             400);
-
-    }
-
-    
+    }    
 }
