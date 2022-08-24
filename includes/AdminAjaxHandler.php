@@ -69,22 +69,16 @@ class AdminAjaxHandler extends Models
         $field_keys = $this->handleEmptyField($value);
         $eventData = $this->senitizeInputValue($field_keys);
 
-
         if (isset($_POST["id"])) {
             $id = $_POST["id"];
-            
             parent::updateEventData($id, $eventData);
         } else {
             parent::addEventData($eventData);
         }  
     }
 
-    
-
     public function getEventData(){
-
         $val =  wp_get_single_post($formId, ARRAY_A);
-
         $content =  json_decode($val['post_content']);
         $args = array(
             'numberposts' => -1,
@@ -93,29 +87,11 @@ class AdminAjaxHandler extends Models
             'post_type'=>'ems_event_data',
             'post_status' => 'any',
         );
-
-        //This commented code returns custom posts under specific terms and taxonomy
-
-        // $args = get_posts(array(
-        //     'numberposts' => -1,
-        //     'post_type' => 'ems_event_data',
-        //     'tax_query' => array(
-        //         array(
-        //         'taxonomy' => 'eventCategory',
-        //         'field' => 'term_id',
-        //         'terms' => 45)
-        //     ))
-        // );
-
-        $abcd =   get_posts($args);
-      
-        if (is_wp_error($abcd)) {
+        $data =   get_posts($args);
+        if (is_wp_error($data)) {
             return false;
     }
-        wp_send_json_success($abcd, 200);
-        die();
-
-
+        wp_send_json_success($data, 200);
     }
 
     public function getSingleEventData(){
@@ -144,7 +120,6 @@ class AdminAjaxHandler extends Models
 
         if (isset($_POST["id"])) {
             $id = $_POST["id"];
-        
             parent::updateCategoryData($id, $categoryData);
         } else {
             parent::addCategoryData($categoryData);
@@ -195,8 +170,6 @@ class AdminAjaxHandler extends Models
         parent::deleteCategoryData($id);
     }
 
-
-
     public function senitizeInputValue($field_keys)
     {
         $inputValue = $field_keys;
@@ -239,7 +212,6 @@ class AdminAjaxHandler extends Models
         if (!empty($errors)) {
             return wp_send_json_error($errors, 400);
         }
-
         return $inputValue;
     }
 

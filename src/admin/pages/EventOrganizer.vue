@@ -139,10 +139,8 @@ export default {
                     that.organizers = data.data;
                 }
             });
-
         },
     }
-
 }
 </script>
 

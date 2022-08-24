@@ -26,20 +26,17 @@ class PostType {
         register_post_type( 'ems_event_data', $args );
     }
 
-public function custom_taxonomy() {
-	
+    public function custom_taxonomy() {     
+        register_taxonomy('eventCategory',array('ems_event_data'), array(
+            'hierarchical' => true,
+            'show_ui' => false,
+        ));
 
-  register_taxonomy('eventCategory',array('ems_event_data'), array(
-    'hierarchical' => true,
-    'show_ui' => false,
+        register_taxonomy('eventOrganizer',array('ems_event_data'), array(
+            'hierarchical' => true,
+            'show_ui' => false,
 
-  ));
-
-  register_taxonomy('eventOrganizer',array('ems_event_data'), array(
-    'hierarchical' => true,
-    'show_ui' => false,
-
-  ));
-}
+        ));
+    }
 
 }

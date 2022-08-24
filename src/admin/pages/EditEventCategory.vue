@@ -80,7 +80,9 @@ export default {
                 },
                 error: function (error) {
                     that.errors = error.responseJSON.data;
-                    // ElMessage.error("Error while updating data")
+                     if(error.responseJSON.data.error){
+                        ElMessage.error(error.responseJSON.data.error)
+                    }
 
                 }
             });
