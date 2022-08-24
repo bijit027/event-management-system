@@ -1,26 +1,26 @@
 <template>
 <div class="container">
     <el-row>
-        <el-col :span="13" :offset="index > 0 ? 2 : 0">
-            <el-card :body-style="{ padding: '0px' }">
-                <img :src="value.url" class="image" />
-                <div style="padding: 25px">
-                    <div class="title">
-                        Title: {{value.title}}
-                    </div><br>
-                    <div class="title">Details:<div class=""> {{value.details}}</div></div><br>
-                    <div class="title">Category: {{value.category}}</div><br>
-                    <div class="title">Organizer: {{value.organizer}}</div><br>
-                    <div class="title">Event Type: {{value.onlineEvent}}</div><br>
-                    <div class="title">Starting Date: {{value.startingDate}}</div><br>
-                    <div class="title">Starting Time: {{value.startingTime}}</div><br>
-                    <div class="title">Ending Date: {{value.endingDate}}</div><br>
-                    <div class="title">Ending Time: {{value.endingTime}}</div><br>
-                    <div class="title">Limit: {{value.limit}}</div><br>
-                    <div class="title">Deadline: {{value.deadline}}</div><br>
-                </div>
-            </el-card>
-        </el-col>
+    <div class="description">
+    <el-card>
+        
+        <img :src="value.url" class="image" />
+        <el-descriptions title="Event Info">        
+            <el-descriptions-item label="Title:"><span class="event_value">{{value.title}}</span></el-descriptions-item>
+            <el-descriptions-item label="Details:"><span class="event_value">{{value.details}}</span></el-descriptions-item>
+            <el-descriptions-item label="Category:"><span class="event_value">{{value.category}}</span></el-descriptions-item>
+            <el-descriptions-item label="Organizer:"><span class="event_value">{{value.organizer}}</span></el-descriptions-item>
+            <el-descriptions-item label="Online Event:"><span class="event_value">{{value.onlineEvent}}</span></el-descriptions-item>
+            <el-descriptions-item label="Starting Date:"><span class="event_value">{{value.startingDate}}</span></el-descriptions-item>
+            <el-descriptions-item label="Starting Time:"><span class="event_value">{{value.startingTime}}</span></el-descriptions-item>
+            <el-descriptions-item label="Ending Date:"><span class="event_value">{{value.endingDate}}</span></el-descriptions-item>
+            <el-descriptions-item label="Ending Time:"><span class="event_value">{{value.endingTime}}</span></el-descriptions-item>
+            <el-descriptions-item label="Location:"><span class="event_value">{{value.location}}</span></el-descriptions-item>
+            <el-descriptions-item label="Limit:"><span class="event_value">{{value.limit}}</span></el-descriptions-item>
+            <el-descriptions-item label="Deadline:"><span class="event_value">{{value.deadline}}</span></el-descriptions-item>
+            </el-descriptions>
+        </el-card>
+        </div>
     </el-row>
 </div>
 </template>
@@ -91,8 +91,15 @@ export default {
 
 .title {
     float: left;
-    font-weight: bold;
-    color: rgb(105, 115, 134);
+
 }
 
+.event_value {
+    color: black;
+    font-weight: bold;
+    margin-left: auto;
+}
+.description{
+    width:60%
+}
 </style>

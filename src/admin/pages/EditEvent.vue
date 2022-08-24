@@ -74,6 +74,7 @@ export default {
                     startingTime: that.val.startingTime,
                     endingDate: that.val.endingDate,
                     endingTime: that.val.endingTime,
+                    location: that.val.location,
                     limit: that.val.limit,
                     deadline: that.val.deadline,
                     ems_nonce: ajax_url.ems_nonce,

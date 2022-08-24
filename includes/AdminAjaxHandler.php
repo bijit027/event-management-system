@@ -65,7 +65,8 @@ class AdminAjaxHandler extends Models
             return wp_send_json_error("Busted! Please login!", 400);
         }
 
-        $value = ["title", "details", "category","organizer", "onlineEvent", "url", "startingDate","startingTime","endingDate","endingTime","limit","deadline"];
+        $value = ["title", "details", "category","organizer", "onlineEvent", "url", "startingDate",
+                "startingTime","endingDate","endingTime","location","limit","deadline"];
         $field_keys = $this->handleEmptyField($value);
         $eventData = $this->senitizeInputValue($field_keys);
 
@@ -125,7 +126,7 @@ class AdminAjaxHandler extends Models
             parent::addCategoryData($categoryData);
         }
 
-}
+    }
 
     public function getEventCategoryData(){
         parent::getAllCategoryData();
