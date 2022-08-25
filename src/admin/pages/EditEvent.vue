@@ -27,9 +27,7 @@ export default {
     },
 
     mounted() {
-
         this.fetchData();
-
     },
     methods: {
         fetchData() {
@@ -53,7 +51,6 @@ export default {
 
         onSubmit() {
             const that = this;
-            console.log(ajax_url.ajaxurl);
             jQuery.ajax({
                 type: "POST",
                 url: ajax_url.ajaxurl,
