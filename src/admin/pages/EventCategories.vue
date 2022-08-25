@@ -4,7 +4,7 @@
         <h2>ALL Events</h2>
     </div>
     <el-button type="primary" @click="addCategory()">Add Category</el-button>
-   
+
     <el-table :data="displayData" style="width: 100%">
         <el-table-column label="Term ID" prop="term_id" />
         <el-table-column label="Category" prop="name" />
@@ -15,11 +15,11 @@
             </template>
         </el-table-column>
     </el-table>
- 
+
     <el-row>
-    <div class="pagination-block">
-        <el-pagination background layout="sizes,total,prev, pager, next,jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" :page-size="pageSize" :page-sizes="[5,10,15,20]" :total="category.length" />
-    </div>
+        <div class="pagination-block">
+            <el-pagination background layout="sizes,total,prev, pager, next,jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" :page-size="pageSize" :page-sizes="[5,10,15,20]" :total="category.length" />
+        </div>
     </el-row>
 </el-main>
 </template>
@@ -50,7 +50,7 @@ export default {
             errorMessage: null,
             showSuccess: '',
             showError: '',
-                  page: 1,
+            page: 1,
             pageSize: 5
         }
     },
@@ -129,6 +129,5 @@ export default {
 </script>
 
 <style>
-
 
 </style>

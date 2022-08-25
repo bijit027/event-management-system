@@ -13,7 +13,6 @@ import {
 } from 'element-plus';
 import CategoryInputForm from "../components/CategoryInputForm.vue";
 export default {
-
     data() {
         return {
             eventCategoryID: this.$route.params.eventID,
@@ -22,20 +21,18 @@ export default {
                 title: '',
                 button: '',
             },
-            erros:[]
+            errors: []
         }
     },
     components: {
         CategoryInputForm
     },
-
     mounted() {
-
         this.fetchData();
     },
     methods: {
         fetchData() {
-
+            console.log("Hello");
             const that = this;
             jQuery.ajax({
                 type: "GET",
@@ -47,19 +44,14 @@ export default {
                 },
                 success: function (data) {
                     that.eventCategory = data.data;
-                    
                     that.value.title = that.eventCategory.name;
                     console.log(that.eventCategory.name);
                     that.value.button = 'Update';
-
                 }
             })
-
         },
         onSubmit() {
-
             const that = this;
-            console.log(that.eventcategroy);
             jQuery.ajax({
                 type: "POST",
                 url: ajax_url.ajaxurl,
@@ -76,20 +68,13 @@ export default {
                         message: data.data.message,
                         type: 'success',
                     })
-
                 },
                 error: function (error) {
                     that.errors = error.responseJSON.data;
-                     if(error.responseJSON.data.error){
-                        ElMessage.error(error.responseJSON.data.error)
-                    }
-
                 }
             });
-
         },
     }
-
 }
 </script>
 
