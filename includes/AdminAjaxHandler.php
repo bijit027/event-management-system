@@ -52,7 +52,19 @@ class AdminAjaxHandler extends Models
             ],
             "ems_delete_category" => [
                 "function" => [$this, "deleteCategory"]
-            ]
+            ],
+            "ems_insert_registration_data" => [
+                "function" => [$this, "insertRegistrationData"]
+            ],
+            "ems_get_event_registration_data" => [
+                "function" => [$this, "getRegistrationData"]
+            ],
+            "ems_get_single_registration_data" => [
+                "function" => [$this, "getSingleRegistrationData"]
+            ],
+            
+            
+            
 
         ];
     }
@@ -169,6 +181,26 @@ class AdminAjaxHandler extends Models
         parent::deleteCategoryData($id);
     }
 
+    public function insertRegistrationData(){
+
+        $value = ["eventId", "eventTitle", "name","email"];
+        $field_keys = $this->handleEmptyField($value);
+        $registrationData = $this->senitizeInputValue($field_keys);
+
+        parent::addRegistrationData($registrationData); 
+        
+    }
+
+    public function getRegistrationData(){
+        parent::fetchRegistrationData();
+    }
+
+    public function getSingleRegistrationData(){
+        $id = intval($_GET["id"]);
+        parent::fetchSingleRegistrationData($id);
+
+    }
+
     public function senitizeInputValue($field_keys)
     {
         $inputValue = $field_keys;
@@ -220,5 +252,7 @@ class AdminAjaxHandler extends Models
                 $field_key => __('Something suspicious in '.$field_key, " event-management-system"),
             ],
             400);
-    }    
+    }
+    
+   
 }

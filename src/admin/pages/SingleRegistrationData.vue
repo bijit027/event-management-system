@@ -1,9 +1,11 @@
 <template>
 <div class="container">
     <el-row>
-    <div class="description">
-    <el-card>
-        
+        <div class="description">
+            <h1>hello</h1>
+
+            <!-- <el-card>
+
         <img :src="value.url" class="image" />
         <el-descriptions title="Event Information">        
             <el-descriptions-item label="Title:"><span class="event_value">{{value.title}}</span></el-descriptions-item>
@@ -19,7 +21,25 @@
             <el-descriptions-item label="Limit:"><span class="event_value">{{value.limit}}</span></el-descriptions-item>
             <el-descriptions-item label="Deadline:"><span class="event_value">{{value.deadline}}</span></el-descriptions-item>
             </el-descriptions>
-        </el-card>
+        </el-card> -->
+
+            <el-card class="box-card">
+                <template #header>
+                    <div class="card-header">
+                        <span>Card name</span>
+                        <el-button class="button" text>Operation button</el-button>
+                    </div>
+                </template>
+                <div class="text item">
+                    Name: {{value.name}}
+                </div>
+                <div class="text item">
+                    Email: {{value.email}}
+                </div>
+                <div class="text item">
+                    Event Name: {{value.eventTitle}}
+                </div>
+            </el-card>
         </div>
     </el-row>
 </div>
@@ -29,8 +49,8 @@
 export default {
     data() {
         return {
-            eventID: this.$route.params.eventID,
-            event: {},
+            applicantId: this.$route.params.applicantId,
+            registration: {},
             value: {}
         }
     },
@@ -45,12 +65,14 @@ export default {
                 url: ajax_url.ajaxurl,
                 dataType: 'json',
                 data: {
-                    action: "ems_get_single_event_data",
-                    id: that.eventID
+                    action: "ems_get_single_registration_data",
+                    id: that.applicantId
                 },
                 success: function (data) {
-                    that.event = data.data;
-                    that.value = JSON.parse(that.event.eventData);
+                    that.registration = data.data;
+                    console.log(that.event);
+                    that.value = JSON.parse(that.registration.registrationData);
+                    console.log(value);
                     // console.log(that.event);
                 }
             });
@@ -62,45 +84,21 @@ export default {
 </script>
 
 <style scoped>
-.time {
-    font-size: 12px;
-    color: #999;
-}
-
-.bottom {
-    margin-top: 13px;
-    line-height: 12px;
+.card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.button {
-    padding: 0;
-    min-height: auto;
+.text {
+    font-size: 14px;
 }
 
-.image {
-    width: 100%;
-    display: block;
+.item {
+    margin-bottom: 18px;
 }
 
-.container {
-    margin-left: 25%;
-    margin-top: 100px
-}
-
-.title {
-    float: left;
-
-}
-
-.event_value {
-    color: black;
-    font-weight: bold;
-    margin-left: auto;
-}
-.description{
-    width:60%
+.box-card {
+    width: 480px;
 }
 </style>

@@ -10,7 +10,7 @@
         <el-table-column label="Event" prop="post_title" />
         <el-table-column align="right">
             <template #default="scope">
-                <el-button size="small" type="primary" @click="showData(scope.$index, scope.row)">View</el-button>
+                <el-button size="small" type="primary" @click="showSingleData(scope.$index, scope.row)">View</el-button>
                 <el-button size="small" @click="editEventData(scope.$index, scope.row)">Edit</el-button>
                 <el-button size="small" type="danger" @click="deletEvent(scope.$index, scope.row)">Delete</el-button>
             </template>
@@ -99,7 +99,7 @@ export default {
                 },
             });
         },
-        showData(index, row) {
+        showSingleData(index, row) {
             this.$router.push({
                 path: `/show-event/${row.ID}`
             })

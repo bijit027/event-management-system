@@ -24,6 +24,13 @@ class PostType {
             'show_ui'         => false,
         );
         register_post_type( 'ems_event_data', $args );
+        $RegistrationArgs = array(
+            'capability_type' => 'post',
+            'public'          => true,
+            'show_ui'         => false,
+        );
+        register_post_type( 'ems_reg_data', $RegistrationArgs );
+
     }
 
     public function custom_taxonomy() {     

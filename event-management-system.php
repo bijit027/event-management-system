@@ -118,9 +118,11 @@ final class EventManagementSystem
     new \EMS\Includes\Assets();
     new \EMS\Includes\Models();
     new \EMS\Includes\AdminAjaxHandler();
+    
     if (is_admin()) {
       new \EMS\Includes\Admin();
       new \EMS\Includes\PostType();
+     
     }else {
       new \EMS\Includes\Frontend();
     }

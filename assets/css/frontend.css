@@ -25,6 +25,15 @@
     margin: 30px;
 }
 
+.events_card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 30px;
+}
+
+
 .card {
     position: relative;
     background: #fff;

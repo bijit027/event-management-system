@@ -46,10 +46,20 @@ class Admin
       "event-management-system#/eventOrganizer",
       [$this, "adminMenuPage"]
   );
+  $registrationList = add_submenu_page(
+    "event-management-system",
+    __("Registration List", "event-management-system"),
+    __("Registration List", "event-management-system"),
+    "manage_options",
+    "event-management-system#/registrationList",
+    [$this, "adminMenuPage"]
+);
 
     add_action("load-" . $hook, [$this, "initHooks"]);
     add_action("load-" . $addEventCategory, [$this, "initHooks"]);
     add_action("load-" . $addEventOrganizer, [$this, "initHooks"]);
+    add_action("load-" . $registrationList, [$this, "initHooks"]);
+    
 
 
   }

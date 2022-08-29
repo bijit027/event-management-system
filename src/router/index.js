@@ -9,6 +9,8 @@ import EventOrganizer from "../admin/pages/EventOrganizer.vue";
 import EditEventOrganizer from "../admin/pages/EditEventOrganizer.vue";
 import AddEventCategory from "../admin/pages/AddEventCategory.vue";
 import AddEventOrganizer from "../admin/pages/AddOrganizer.vue";
+import RegistrationList from "../admin/pages/RegistrationList.vue";
+import SingleRegistrationData from "../admin/pages/SingleRegistrationData.vue";
 
 const routes = [
     {
@@ -61,6 +63,17 @@ const routes = [
         name: "AddEventOrganizer",
         component: AddEventOrganizer,
     },
+    {
+        path: "/registrationList",
+        name: "RegistrationList",
+        component: RegistrationList,
+    },
+    {
+        path: "/registrationList/:applicantId",
+        name: "SingleRegistrationData",
+        component: SingleRegistrationData,
+    },
+   
 
 ];
 
