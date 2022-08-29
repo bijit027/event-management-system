@@ -1,82 +1,26 @@
-<!-- <div class="hello">Hello world</div>
 
-<head>
-    <title>Event List</title>
-</head>
-<body>
-    <div class="container" id="container">
-        <div class="card-content">
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://www.jquery-az.com/html/images/banana.jpg" alt="">
-                </div>
 
-                <div class="card-info">
-                    <h3 class="title">Card01</h3>
-                    <p>type and scrambled it to make a type specimen book. It has survived not only five centuries, 
-                        but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised 
-                        in the 1960s with the release of Letraset sheets 
-                        containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card-content">
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://www.jquery-az.com/html/images/banana.jpg" alt="">
-                </div>
-
-                <div class="card-info">
-                    <h3>Card01</h3>
-                    <p>skdfhkjshdfjkh</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card-content">
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://www.jquery-az.com/html/images/banana.jpg" alt="">
-                </div>
-
-                <div class="card-info">
-                    <h3>Card01</h3>
-                    <p>skdfhkjshdfjkh</p>
-                </div>
-            </div>
-        </div>
-
-        
-    </div>
-
-</body> -->
-
-<!-- <div class="container">
-    <div class="card">
-        <div class="card-header">
-        </div>
-        <div class="addDiv">
-            <div id="card-body">
-            </div>
-        </div>
-    </div>
-</div> -->
-
-<div class="card-content"></div>
+<div class="container">
+    <div class="row"></div>
+</div>
 
 
  <!-- Modal -->
  <div class="modal fade" id="getCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
    <div class="modal-dialog modal-lg">
       <div class="modal-content">
-       <div class="modal-header">
-         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-         <h4 class="modal-title" id="myModalLabel"> API CODE </h4>
-       </div>
+      <div class="modal-header">
+        <h5 class="modal-title">Event Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
        <div class="modal-body" id="getCode" style="overflow-x: scroll;">
           //ajax success content here.
        </div>
+       <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
     </div>
    </div>
  </div>
@@ -107,10 +51,6 @@
       </div>
         </form>
       </div>
-      <!-- <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Register</button>
-      </div> -->
     </div>
   </div>
 </div>

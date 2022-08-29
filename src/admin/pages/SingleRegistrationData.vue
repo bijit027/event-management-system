@@ -2,32 +2,11 @@
 <div class="container">
     <el-row>
         <div class="description">
-            <h1>hello</h1>
-
-            <!-- <el-card>
-
-        <img :src="value.url" class="image" />
-        <el-descriptions title="Event Information">        
-            <el-descriptions-item label="Title:"><span class="event_value">{{value.title}}</span></el-descriptions-item>
-            <el-descriptions-item label="Details:"><span class="event_value">{{value.details}}</span></el-descriptions-item>
-            <el-descriptions-item label="Category:"><span class="event_value">{{value.category}}</span></el-descriptions-item>
-            <el-descriptions-item label="Organizer:"><span class="event_value">{{value.organizer}}</span></el-descriptions-item>
-            <el-descriptions-item label="Online Event:"><span class="event_value">{{value.onlineEvent}}</span></el-descriptions-item>
-            <el-descriptions-item label="Starting Date:"><span class="event_value">{{value.startingDate}}</span></el-descriptions-item>
-            <el-descriptions-item label="Starting Time:"><span class="event_value">{{value.startingTime}}</span></el-descriptions-item>
-            <el-descriptions-item label="Ending Date:"><span class="event_value">{{value.endingDate}}</span></el-descriptions-item>
-            <el-descriptions-item label="Ending Time:"><span class="event_value">{{value.endingTime}}</span></el-descriptions-item>
-            <el-descriptions-item label="Location:"><span class="event_value">{{value.location}}</span></el-descriptions-item>
-            <el-descriptions-item label="Limit:"><span class="event_value">{{value.limit}}</span></el-descriptions-item>
-            <el-descriptions-item label="Deadline:"><span class="event_value">{{value.deadline}}</span></el-descriptions-item>
-            </el-descriptions>
-        </el-card> -->
-
             <el-card class="box-card">
                 <template #header>
                     <div class="card-header">
-                        <span>Card name</span>
-                        <el-button class="button" text>Operation button</el-button>
+                        <span>Registry Information</span>
+                        
                     </div>
                 </template>
                 <div class="text item">
@@ -100,5 +79,10 @@ export default {
 
 .box-card {
     width: 480px;
+}
+
+.container {
+    margin-left: 25%;
+    margin-top: 100px
 }
 </style>

@@ -1,17 +1,15 @@
 <template>
 <el-main>
     <div>
-        <h2>ALL Events</h2>
+        <h2>Registry List</h2>
     </div>
-   
-
     <el-table :data="displayData" style="width: 100%">
         <el-table-column label="ID" prop="ID" />
         <el-table-column label="Applicant" prop="post_title" />
         <el-table-column align="right">
             <template #default="scope">
                 <el-button size="small" type="primary" @click="showSingleData(scope.$index, scope.row)">View</el-button>
-                <el-button size="small" type="danger" @click="deletCategory(scope.$index, scope.row)">cancel</el-button>
+                <el-button size="small" type="danger" @click="cancelRegistration(scope.$index, scope.row)">cancel</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -77,13 +75,7 @@ export default {
                     this.pageSize = val;
                 },
 
-                editCategroy(index, row) {
-                    this.$router.push({
-                        path: `/eventCategory/${row.term_id}`
-                    })
-                },
-
-                deletCategory(index, row) {
+                cancelRegistration(index, row) {
                     const that = this;
                     jQuery.ajax({
                         type: "POST",
